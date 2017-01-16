@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "Menu.h"
+#include "Task.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -10,6 +11,7 @@ int main( int argc, char* args[] )
 	SDL_Window* window = NULL;
 	SDL_Surface* screen = NULL;
 	TTF_Font *font = NULL;
+	SDL_Renderer *renderer = NULL;
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -18,6 +20,8 @@ int main( int argc, char* args[] )
 	else
 	{
 		window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
 		if( window == NULL )
 		{
 			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
@@ -42,6 +46,7 @@ int main( int argc, char* args[] )
 			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 			SDL_UpdateWindowSurface(window);
 
+			Task t(0,window,renderer);
 			int task = 1;
 			int x, y;
 			SDL_Event event;
@@ -59,12 +64,21 @@ int main( int argc, char* args[] )
 							running = menu.init();
 							if (running != task && running != 0) //we have new task
 							{
-
+								task = running;
 							}
 							break;
 						case SDL_BUTTON_LEFT: //send x and y to current task
 							x = event.button.x;
 							y = event.button.y;
+
+							SDL_RenderDrawPoint(renderer, x, y);
+							SDL_RenderPresent(renderer);
+							switch (task)
+							{
+							case 1:
+
+								break;
+							}
 							break;
 					}
 				}

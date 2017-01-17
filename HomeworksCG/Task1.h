@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "Point.h"
 #include "Task.h"
+#include <SDL_ttf.h>
 
 class Task1 : public Task
 {
@@ -10,19 +11,17 @@ public :
 	{
 		isBresenham = false;
 	}
-	//Task1();
-	//void addPoint(int x, int y);
+	~Task1();
+
 	void Draw();
-	//int pointsNeeded;
+	void drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font);
 
 private:
-	//int pointsNum;
-	//Point* points;
 	bool isBresenham;
-	//SDL_Renderer* renderer;
-
-	//void deletePoints();
-	// reset();
+	SDL_Surface * info1;
+	SDL_Surface * info2;
+	SDL_Rect pos1, pos2;
+	SDL_Color color;
 	
 	void drawBresenhamCircle(Point center, int radius);
 	void SimpleCircle(Point center, int radius);

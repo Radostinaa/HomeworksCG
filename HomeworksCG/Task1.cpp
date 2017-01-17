@@ -1,37 +1,8 @@
 #include "Task1.h"
 #include <new>
 
-//void Task1::addPoint(int x, int y)
-//{
-//	pointsNeeded--;
-//	points[pointsNum] = Point(x, y);
-//	pointsNum++;
-//}
 
-
-//Task1::Task1(SDL_Renderer* r)
-//{
-//	renderer = r;
-//	reset();
-//}
-
-//Task1::~Task1()
-//{
-//	deletePoints();
-//}
-//void Task1::deletePoints()
-//{
-//	delete[] points;
-//}
-
-//void Task1::reset()
-//{
-	//pointsNum = 0;
-	//pointsNeeded = 2;
-	//points = new (std::nothrow) Point[pointsNeeded];
-	
-//}
-int distance(Point p1, Point p2) 
+int distance(Point p1, Point p2)
 {
 	return sqrt((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
 }
@@ -44,11 +15,11 @@ void Task1::drawBresenhamCircle(Point center, int radius)
 	y = radius;
 	d = 3 - 2 * radius;
 
-	Point(center.x, center.y + radius).draw(renderer, true);
-	Point(center.x, center.y + radius).draw(renderer, true);
-	Point(center.x, center.y - radius).draw(renderer, true);
-	Point(center.x + radius, center.y).draw(renderer, true);
-	Point(center.x - radius, center.y).draw(renderer, true);
+	Point(center.x, center.y + radius).draw(renderer, color, true);
+	Point(center.x, center.y + radius).draw(renderer, color, true);
+	Point(center.x, center.y - radius).draw(renderer, color, true);
+	Point(center.x + radius, center.y).draw(renderer, color, true);
+	Point(center.x - radius, center.y).draw(renderer, color, true);
 
 	while (1)
 	{
@@ -72,10 +43,10 @@ void Task1::SimpleCircle(Point center, int radius)
 	int x, y;
 	x = 0;
 	y = radius;
-	Point(center.x, center.y + radius).draw(renderer, true);
-	Point(center.x + radius, center.y).draw(renderer, true);
-	Point(center.x, center.y - radius).draw(renderer, true);
-	Point(center.x - radius, center.y).draw(renderer, true);
+	Point(center.x, center.y + radius).draw(renderer, color, true);
+	Point(center.x + radius, center.y).draw(renderer, color, true);
+	Point(center.x, center.y - radius).draw(renderer, color, true);
+	Point(center.x - radius, center.y).draw(renderer, color, true);
 	while (x < y)
 	{
 		x++;
@@ -87,10 +58,10 @@ void Task1::SimpleCircle(Point center, int radius)
 
 void Task1::FourSymmetric(Point center, int x, int y, int radius)
 {
-	Point(center.x + x, center.y + y).draw(renderer, true);
-	Point(center.x - x, center.y - y).draw(renderer, true);
-	Point(center.x - x, center.y + y).draw(renderer, true);
-	Point(center.x + x, center.y - y).draw(renderer, true);
+	Point(center.x + x, center.y + y).draw(renderer, color, true);
+	Point(center.x - x, center.y - y).draw(renderer, color, true);
+	Point(center.x - x, center.y + y).draw(renderer, color, true);
+	Point(center.x + x, center.y - y).draw(renderer, color, true);
 }
 
 void Task1::EightSymmetric(Point center, int x, int y, int radius)
@@ -99,16 +70,49 @@ void Task1::EightSymmetric(Point center, int x, int y, int radius)
 	FourSymmetric(center, y, x, radius);
 }
 
+Task1::~Task1()
+{
+	SDL_FreeSurface(info1);
+	SDL_FreeSurface(info2);
+}
+
 void Task1::Draw()
 {
 	points[0].toCustom(); // center
 	points[1].toCustom(); // p2
 	int radius = distance(points[0], points[1]);
 
-	if(isBresenham) drawBresenhamCircle(points[0], radius);
-	else SimpleCircle(points[0], radius);
+	/*if (isBresenham)
+	{
+		color = { 256 ,100 ,34 ,1};
+		drawBresenhamCircle(points[0], radius);
+	}
+	else
+	{*/
+	color = { 0 ,255 ,0 ,1 };
+	SimpleCircle(points[0], radius);
+	//}
 
 	isBresenham = isBresenham ? 0 : 1;
 	deletePoints();
 	reset();
 }
+
+void Task1::drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font)
+{
+	if (info1 == NULL)
+	{
+		info1 = TTF_RenderText_Solid(font, "Bresenham", { 255 ,100 ,34 ,1 });
+		info2 = TTF_RenderText_Solid(font, "SimpleCircle", { 0 ,255 ,0 ,1 });
+	}
+
+	pos1.x = 10;
+	pos1.y = 10;
+	pos2.x = 20 + info1->clip_rect.w;
+	pos2.y = 10;
+
+	SDL_BlitSurface(info1, NULL, screen, &pos1);
+	SDL_BlitSurface(info2, NULL, screen, &pos2);
+	SDL_UpdateWindowSurface(window);
+}
+

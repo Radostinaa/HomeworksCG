@@ -28,11 +28,16 @@ Menu::Menu(SDL_Window* w, TTF_Font* f)
 	pos[2].y = screen->clip_rect.h / 2 - menus[2]->clip_rect.h/2; // center
 	//y up
 	pos[1].y = screen->clip_rect.h / 2 - (menus[2]->clip_rect.h/2 + menus[1]->clip_rect.h);
-	pos[0].y = pos[1].y - menus[0]->clip_rect.h;  // screen->clip_rect.h / 2 - (menus[2]->clip_rect.h + menus[1]->clip_rect.h + menus[0]->clip_rect.h);
+	pos[0].y = pos[1].y - menus[0]->clip_rect.h; 
 	//y down
-	pos[3].y = pos[2].y + menus[3]->clip_rect.h; //screen->clip_rect.h / 2 + (menus[2]->clip_rect.h + menus[3]->clip_rect.h);
-	pos[4].y = pos[3].y + menus[4]->clip_rect.h; // screen->clip_rect.h / 2 + (menus[2]->clip_rect.h + menus[3]->clip_rect.h + menus[4]->clip_rect.h);
+	pos[3].y = pos[2].y + menus[3]->clip_rect.h; 
+	pos[4].y = pos[3].y + menus[4]->clip_rect.h; 
 
+}
+
+Menu::~Menu()
+{
+	freeAll();
 }
 
 int Menu::init()
@@ -49,7 +54,6 @@ int Menu::init()
 			switch (event.type)
 			{
 			case SDL_QUIT:
-				freeAll();
 				return 0;
 				break;
 			case SDL_MOUSEMOTION:
@@ -85,13 +89,11 @@ int Menu::init()
 				{
 					if (isInRect(x, y, i))
 					{
-						freeAll();
 						return i+1;
 					}
 				}
 				break;
 			case SDLK_ESCAPE:
-				freeAll();
 				return 5; //==close
 				break;
 			}

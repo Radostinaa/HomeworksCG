@@ -24,5 +24,6 @@ private:
 
 public:
 	Menu(SDL_Window* w, TTF_Font* f);
+	~Menu();
 	int init();
 };

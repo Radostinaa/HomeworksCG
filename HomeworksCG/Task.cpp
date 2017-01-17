@@ -1,35 +1,16 @@
-#include <stdio.h>
 #include "Task.h"
 #include <new>
 
-Task::Task(int taskNub, SDL_Window* w, SDL_Renderer *r)
+Task::Task(SDL_Renderer * r, int pNeeded)
 {
-	window = w;
+	pn = pNeeded;
 	renderer = r;
-	taskNumber = taskNub;
-
-	switch (taskNumber)
-	{
-	case 1:
-		pointsNeeded = 2;
-		break;
-	}
-
-	points = new (std::nothrow) Point[pointsNeeded];
+	reset();
 }
 
 Task::~Task()
 {
-	delete [] points;
-}
-
-void Task::Draw()
-{
-	switch (taskNumber)
-	{
-	case 1: Draw1();
-		break;
-	}
+	deletePoints();
 }
 
 void Task::addPoint(int x, int y)
@@ -39,7 +20,14 @@ void Task::addPoint(int x, int y)
 	pointsNum++;
 }
 
-void Task::Draw1()
+void Task::reset()
 {
-	//draw circle
+	pointsNum = 0;
+	pointsNeeded = pn;
+	points = new (std::nothrow) Point[pointsNeeded];
+}
+
+void Task::deletePoints()
+{
+	delete[] points;
 }

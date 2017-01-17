@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "Menu.h"
-#include "Task1.h"
+#include "Task2.h"
 #include "Point.h"
 
 const int SCREEN_WIDTH = 1040;
@@ -21,8 +21,8 @@ Task* swithcTask(int task, SDL_Renderer* r)
 {
 	switch (task)
 	{
-	case 1:
-		return new Task1(r);
+	case 2:
+		return new Task2(r);
 		break;
 	}
 }

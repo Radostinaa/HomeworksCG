@@ -4,14 +4,14 @@
 #include "Task.h"
 #include <SDL_ttf.h>
 
-class Task1 : public Task
+class Task2 : public Task
 {
 public :
-	Task1(SDL_Renderer* r) : Task(r , 2) 
+	Task2(SDL_Renderer* r) : Task(r , 2)
 	{
 		isBresenham = false;
 	}
-	~Task1();
+	~Task2();
 
 	void Draw();
 	void drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font);

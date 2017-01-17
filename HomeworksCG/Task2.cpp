@@ -1,4 +1,4 @@
-#include "Task1.h"
+#include "Task2.h"
 #include <new>
 
 
@@ -7,7 +7,7 @@ int distance(Point p1, Point p2)
 	return sqrt((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
 }
 
-void Task1::drawBresenhamCircle(Point center, int radius)
+void Task2::drawBresenhamCircle(Point center, int radius)
 {
 
 	int x = radius;
@@ -66,7 +66,7 @@ void Task1::drawBresenhamCircle(Point center, int radius)
 	}*/
 }
 
-void Task1::SimpleCircle(Point center, int radius)
+void Task2::SimpleCircle(Point center, int radius)
 {
 	int x, y;
 	x = 0;
@@ -84,7 +84,7 @@ void Task1::SimpleCircle(Point center, int radius)
 	if (x == y) FourSymmetric(center, x, y, radius);
 }
 
-void Task1::FourSymmetric(Point center, int x, int y, int radius)
+void Task2::FourSymmetric(Point center, int x, int y, int radius)
 {
 	Point(center.x + x, center.y + y).draw(renderer, color, true);
 	Point(center.x - x, center.y - y).draw(renderer, color, true);
@@ -92,19 +92,19 @@ void Task1::FourSymmetric(Point center, int x, int y, int radius)
 	Point(center.x + x, center.y - y).draw(renderer, color, true);
 }
 
-void Task1::EightSymmetric(Point center, int x, int y, int radius)
+void Task2::EightSymmetric(Point center, int x, int y, int radius)
 {
 	FourSymmetric(center, x, y, radius);
 	FourSymmetric(center, y, x, radius);
 }
 
-Task1::~Task1()
+Task2::~Task2()
 {
 	SDL_FreeSurface(info1);
 	SDL_FreeSurface(info2);
 }
 
-void Task1::Draw()
+void Task2::Draw()
 {
 	points[0].toCustom(); // center
 	points[1].toCustom(); // p2
@@ -126,7 +126,7 @@ void Task1::Draw()
 	reset();
 }
 
-void Task1::drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font)
+void Task2::drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font)
 {
 	if (info1 == NULL)
 	{

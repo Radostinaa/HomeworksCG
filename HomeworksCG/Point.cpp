@@ -18,11 +18,11 @@ void Point::toCustom()
 	y = y / 2;
 }
 
-void Point::draw(SDL_Renderer * r, bool isCustom)
+void Point::draw(SDL_Renderer * r, SDL_Color c, bool isCustom)
 {
 	if (isCustom)
 		toReal();
-	SDL_SetRenderDrawColor(r, 0x00, 0x00, 0x00, 0x00);
+	SDL_SetRenderDrawColor(r, c.r, c.g, c.b, c.a);
 
 	SDL_RenderDrawPoint(r, x, y);
 	SDL_RenderDrawPoint(r, x + 1, y);

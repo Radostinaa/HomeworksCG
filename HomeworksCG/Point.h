@@ -8,5 +8,5 @@ public:
 	Point(int _x = 0, int _y = 0);
 	void toReal();
 	void toCustom();
-	void draw(SDL_Renderer *r, bool isCustom);
+	void draw(SDL_Renderer *r, SDL_Color c, bool isCustom);
 };

@@ -46,7 +46,6 @@ int Menu::init()
 
 		while (SDL_PollEvent(&event))
 		{
-			printf("type:%d \n", event.type);
 			switch (event.type)
 			{
 			case SDL_QUIT:

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "Menu.h"
 #include "Task2.h"
+#include "Task1.h"
 #include "Point.h"
 
 const int SCREEN_WIDTH = 1040;
@@ -21,6 +22,8 @@ Task* swithcTask(int task, SDL_Renderer* r)
 {
 	switch (task)
 	{
+	case 1:
+		return new Task1(r);
 	case 2:
 		return new Task2(r);
 		break;
@@ -91,6 +94,7 @@ int main(int argc, char* args[])
 							if (running != currentTask && running != 0 && running != 5) //we have new task
 							{
 								currentTask = running;
+								delete t;
 								t = swithcTask(currentTask, renderer);
 								clear(renderer, screen, window);
 								t->drawInfo(window, screen, font);
@@ -122,7 +126,7 @@ int main(int argc, char* args[])
 			SDL_DestroyWindow(window);
 			TTF_Quit();
 			SDL_Quit();
-			delete[] t;
+			delete t;
 
 		}
 	}

@@ -1,6 +1,4 @@
 #include "Task2.h"
-#include <new>
-
 
 int distance(Point p1, Point p2)
 {

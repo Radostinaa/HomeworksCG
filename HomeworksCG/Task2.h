@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL.h>
-#include "Point.h"
 #include "Task.h"
 #include <SDL_ttf.h>
 

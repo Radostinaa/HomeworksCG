@@ -9,7 +9,35 @@ int distance(Point p1, Point p2)
 
 void Task1::drawBresenhamCircle(Point center, int radius)
 {
-	int x, y, d;
+
+	int x = radius;
+	int y = 0;
+	int err = 0;
+
+	while (x >= y)
+	{
+		Point(center.x + x, center.y + y).draw(renderer,color,true);
+		Point(center.x + y, center.y + x).draw(renderer,color,true);
+		Point(center.x - y, center.y + x).draw(renderer,color,true);
+		Point(center.x - x, center.y + y).draw(renderer,color,true);
+		Point(center.x - x, center.y - y).draw(renderer,color,true);
+		Point(center.x - y, center.y - x).draw(renderer,color,true);
+		Point(center.x + y, center.y - x).draw(renderer,color,true);
+		Point(center.x + x, center.y - y).draw(renderer,color,true);
+
+		if (err <= 0)
+		{
+			y += 1;
+			err += 2 * y + 1;
+		}
+		if (err > 0)
+		{
+			x -= 1;
+			err -= 2 * x + 1;
+		}
+	}
+
+	/*int x, y, d;
 
 	x = 0;
 	y = radius;
@@ -28,14 +56,14 @@ void Task1::drawBresenhamCircle(Point center, int radius)
 			y--;
 			d += 1 - 2 * y;
 		}
-		if (d >= x)
+		if (d <= x)
 		{
 			x++;
 			d += 1 + 2 * x;
 		}
-		if (x < y) return;
+		if (y<x) return;
 		FourSymmetric(center, x, y, radius);
-	}
+	}*/
 }
 
 void Task1::SimpleCircle(Point center, int radius)
@@ -82,16 +110,16 @@ void Task1::Draw()
 	points[1].toCustom(); // p2
 	int radius = distance(points[0], points[1]);
 
-	/*if (isBresenham)
+	if (isBresenham)
 	{
-		color = { 256 ,100 ,34 ,1};
+		color = { 255 ,100 ,34 ,1 };
 		drawBresenhamCircle(points[0], radius);
 	}
 	else
-	{*/
-	color = { 0 ,255 ,0 ,1 };
-	SimpleCircle(points[0], radius);
-	//}
+	{
+		color = { 0 ,255 ,0 ,1 };
+		SimpleCircle(points[0], radius);
+	}
 
 	isBresenham = isBresenham ? 0 : 1;
 	deletePoints();

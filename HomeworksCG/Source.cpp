@@ -41,8 +41,7 @@ int main(int argc, char* args[])
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-	}
-	else
+	} else
 	{
 		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -51,12 +50,10 @@ int main(int argc, char* args[])
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-		}
-		else if (TTF_Init() < 0)
+		} else if (TTF_Init() < 0)
 		{
 			// Handle error...
-		}
-		else
+		} else
 		{
 			font = TTF_OpenFont("OpenSans-LightItalic.ttf", 28);
 			fontInfo = TTF_OpenFont("OpenSans-LightItalic.ttf", 18);
@@ -89,21 +86,20 @@ int main(int argc, char* args[])
 						break;
 					case SDL_KEYDOWN:
 						if (event.key.keysym.sym == SDLK_m)// open menu
-						{ 
+						{
 							running = menu.init();
 							if (running != currentTask && running != 0 && running != 5) //we have new task
 							{
 								currentTask = running;
 								delete t;
 								t = swithcTask(currentTask, renderer);
-								clear(renderer, screen, window);
-								t->drawInfo(window, screen, font);
 							}
-						}
-						else if (event.key.keysym.sym == SDLK_c) // clear
+							clear(renderer, screen, window);
+							t->drawInfo(window, screen, font);
+						} else if (event.key.keysym.sym == SDLK_c) // clear
 						{
 							clear(renderer, screen, window);
-							t->drawInfo(window,screen,fontInfo);
+							t->drawInfo(window, screen, fontInfo);
 						}
 						break;
 					case SDL_MOUSEBUTTONDOWN:
@@ -111,7 +107,7 @@ int main(int argc, char* args[])
 						{
 							p.x = event.button.x;
 							p.y = event.button.y;
-							p.draw(renderer, {0,0,0,1}, false);
+							p.draw(renderer, { 0,0,0,1 }, false);
 
 							t->addPoint(p.x, p.y);
 

@@ -5,7 +5,7 @@ Task::Task(SDL_Renderer * r, int pNeeded)
 {
 	pn = pNeeded;
 	renderer = r;
-	reset();
+	resetPoints();
 }
 
 Task::~Task()
@@ -22,7 +22,7 @@ void Task::addPoint(int x, int y)
 	pointsNum++;
 }
 
-void Task::reset()
+void Task::resetPoints()
 {
 	pointsNum = 0;
 	pointsNeeded = pn;

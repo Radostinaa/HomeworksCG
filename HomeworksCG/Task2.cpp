@@ -119,7 +119,7 @@ void Task2::Draw()
 
 	isBresenham = isBresenham ? 0 : 1;
 	deletePoints();
-	reset();
+	resetPoints();
 }
 
 void Task2::drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font)

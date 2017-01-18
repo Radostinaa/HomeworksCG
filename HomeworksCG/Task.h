@@ -14,7 +14,7 @@ public:
 	SDL_Renderer* renderer;
 	int pointsNeeded;
 	void addPoint(int x, int y);
-	void reset();
+	void resetPoints();
 	void deletePoints();
 	Point* points; 
 	int pn;

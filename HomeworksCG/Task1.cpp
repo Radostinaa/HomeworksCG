@@ -44,41 +44,54 @@ void Task1::BresenhamLine(Point p1, Point p2)
 
 void Task1::RoundingLine(Point p1, Point p2)
 {
-	int dx = abs(p2.x - p1.x);
-	int dy = abs(p2.y - p1.y);
-	bool reverse;
-	if (reverse = (dx < dy)) {
-		int d = p1.x; p1.x = p1.y; p1.y = d;
-		d = p2.x; p2.x = p2.y; p2.y = d;
-		d = dx; dx = dy; dy = d;
+	int x, z, i, h, v;
+	float slope,y;
+	bool sx, sy, reverse;
+	h = abs(p2.x - p1.x); v = abs(p2.y - p1.y);
+	sx = (p2.x < p1.x);
+	sy = (p2.y < p1.y);
+	if (h < v) {
+		reverse = true;
+		x = h;
+		h = v;
+		v = x;
+	} else {
+		reverse = false;
 	}
-	int incX = (p1.x <= p2.x) ? 1 : -1;
-	float incY = ((float)dy )/ (float)dx;
-	int x = p1.x;
-	float y = p1.y;
-	int n = dx + 1;
-	while (n--) {
-		if (reverse) Point((int)y, x).draw(renderer, color, true);
-		else Point(x, (int)y).draw(renderer, color, true);
-		x += incX;
-		y += incY;
+	if (h == 0) {
+		p1.draw(renderer, color, true);
+		return;
+	}
+	slope = (float)v / (float)h;
+	for (i = 0; i < h; ++i) {
+		x = i; y = floor(slope * x + 0.5);
+		if (reverse) {
+			z = x; x = y; y = z;
+		}
+		if (sx) {
+			x = (-x);
+		}
+		if (sy) {
+			y = (-y);
+		}
+		Point(x + p1.x, y + p1.y).draw(renderer, color, true);
 	}
 }
 
 void Task1::Draw()
 {
-	//if (isBresenham)
-	//{
-	//	color = { 255 ,100 ,34 ,1 };
-	//	BresenhamLine(points[0], points[1]);
-	//}
-	//else
-	//{
+	if (isBresenham)
+	{
+		color = { 255 ,100 ,34 ,1 };
+		BresenhamLine(points[0], points[1]);
+	}
+	else
+	{
 		color = { 0 ,255 ,0 ,1 };
 		RoundingLine(points[0], points[1]);
-	//}
+	}
 
-	isBresenham = isBresenham ? 0 : 1;
+	isBresenham = !isBresenham;
 	deletePoints();
 	resetPoints();
 }

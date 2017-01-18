@@ -3,6 +3,7 @@
 #include "Menu.h"
 #include "Task2.h"
 #include "Task1.h"
+#include "Task3.h"
 #include "Point.h"
 
 const int SCREEN_WIDTH = 1040;
@@ -18,7 +19,7 @@ void clear(SDL_Renderer* r, SDL_Surface* screen, SDL_Window* window)
 	SDL_RenderClear(r);
 }
 
-Task* swithcTask(int task, SDL_Renderer* r)
+Task* swithcTask(int task, SDL_Renderer* r, SDL_Surface* s)
 {
 	switch (task)
 	{
@@ -27,6 +28,10 @@ Task* swithcTask(int task, SDL_Renderer* r)
 	case 2:
 		return new Task2(r);
 		break;
+	case 3:
+		int w = s->w ;
+		int h = s->h ;
+		return new Task3(r,w,h);
 	}
 }
 
@@ -69,7 +74,7 @@ int main(int argc, char* args[])
 			if (running == 5 || running == 0) currentTask = 1;
 			else  currentTask = running;
 
-			Task* t = swithcTask(currentTask, renderer);
+			Task* t = swithcTask(currentTask, renderer, screen);
 			t->drawInfo(window, screen, fontInfo);
 
 			Point p;
@@ -92,7 +97,7 @@ int main(int argc, char* args[])
 							{
 								currentTask = running;
 								delete t;
-								t = swithcTask(currentTask, renderer);
+								t = swithcTask(currentTask, renderer, screen);
 							}
 							clear(renderer, screen, window);
 							t->drawInfo(window, screen, font);

@@ -70,16 +70,16 @@ void Task1::Draw()
 	points[0].toCustom(); // p1
 	points[1].toCustom(); // p2
 
-	if (isBresenham)
-	{
-		color = { 255 ,100 ,34 ,1 };
-		BresenhamLine(points[0], points[1]);
-	}
-	else
-	{
+	//if (isBresenham)
+	//{
+	//	color = { 255 ,100 ,34 ,1 };
+	//	BresenhamLine(points[0], points[1]);
+	//}
+	//else
+	//{
 		color = { 0 ,255 ,0 ,1 };
 		RoundingLine(points[0], points[1]);
-	}
+	//}
 
 	isBresenham = isBresenham ? 0 : 1;
 	deletePoints();

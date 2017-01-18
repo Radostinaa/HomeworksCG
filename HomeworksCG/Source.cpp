@@ -84,9 +84,9 @@ int main(int argc, char* args[])
 				{
 					switch (event.type)
 					{
-						//case SDL_QUIT:
-						//	//freeAll();
-							//break;
+					case SDL_QUIT:
+						running = 0;
+						break;
 					case SDL_KEYDOWN:
 						if (event.key.keysym.sym == SDLK_m)// open menu
 						{ 

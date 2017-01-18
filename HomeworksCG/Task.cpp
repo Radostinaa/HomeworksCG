@@ -16,7 +16,9 @@ Task::~Task()
 void Task::addPoint(int x, int y)
 {
 	pointsNeeded--;
-	points[pointsNum] = Point(x, y);
+	Point p = Point(x, y);
+	p.toCustom();
+	points[pointsNum] = p;
 	pointsNum++;
 }
 

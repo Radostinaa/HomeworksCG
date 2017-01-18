@@ -16,9 +16,7 @@ public:
 	void addPoint(int x, int y);
 	void reset();
 	void deletePoints();
-	Point* points;
-
-private: 
+	Point* points; 
 	int pn;
 	int pointsNum;
 };

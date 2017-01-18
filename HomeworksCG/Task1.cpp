@@ -67,9 +67,6 @@ void Task1::RoundingLine(Point p1, Point p2)
 
 void Task1::Draw()
 {
-	points[0].toCustom(); // p1
-	points[1].toCustom(); // p2
-
 	//if (isBresenham)
 	//{
 	//	color = { 255 ,100 ,34 ,1 };

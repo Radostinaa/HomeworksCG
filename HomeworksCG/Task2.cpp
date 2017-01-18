@@ -104,8 +104,6 @@ Task2::~Task2()
 
 void Task2::Draw()
 {
-	points[0].toCustom(); // center
-	points[1].toCustom(); // p2
 	int radius = distance(points[0], points[1]);
 
 	if (isBresenham)

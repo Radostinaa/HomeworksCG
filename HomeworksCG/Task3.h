@@ -14,7 +14,7 @@ struct Pixel
 class Task3 : public Task
 {
 public:
-	Task3(SDL_Renderer* r, int _w, int _h) : Task(r, 4) 
+	Task3(SDL_Renderer* r, int _w, int _h) : Task(r, 5) 
 	{
 		pointsNeeded = 2;//first side
 		w = _w;

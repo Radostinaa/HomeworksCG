@@ -59,26 +59,26 @@ void Task3::drawside()
 		BresenhamLine(points[edges-1], points[edges]);
 }
 
-void Task3::BresenhamLine(Point p1, Point p2)
+void Task3::BresenhamLine(Point form, Point to)
 {
 	int x, y;
-	int dx = abs(p2.x - p1.x);
-	int  dy = abs(p2.y - p1.y);
+	int dx = abs(to.x - form.x);
+	int  dy = abs(to.y - form.y);
 	bool reverse = dx < dy;
 	if (reverse)
 	{
-		int d = p1.x; p1.x = p1.y; p1.y = d;
-		d = p2.x; p2.x = p2.y; p2.y = d;
+		int d = form.x; form.x = form.y; form.y = d;
+		d = to.x; to.x = to.y; to.y = d;
 		d = dx; dx = dy; dy = d;
 	}
 	int incUp = -2 * dx + 2 * dy;
 	int incDn = 2 * dy;
-	int incX = (p1.x <= p2.x) ? 1 : -1;
-	int incY = (p1.y <= p2.y) ? 1 : -1;
+	int incX = (form.x <= to.x) ? 1 : -1;
+	int incY = (form.y <= to.y) ? 1 : -1;
 
 	int d = -dx + 2 * dy;
-	x = p1.x;
-	y = p1.y;
+	x = form.x;
+	y = form.y;
 	int n = dx + 1;
 	while (n--)
 	{

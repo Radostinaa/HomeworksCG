@@ -1,7 +1,6 @@
 #pragma once
 #include "Task.h"
 #include <SDL.h>
-#include <new>
 
 struct Pixel 
 {
@@ -19,7 +18,7 @@ public:
 		pointsNeeded = 2;//first side
 		w = _w;
 		h = _h;
-		filledPixels = new (std::nothrow) Pixel[w*h];
+		filledPixels = new Pixel[w*h];
 		pixelsCount = 0;
 		colorSides = { 255,0,0,1 };
 		colorFill = { 255,165,0,1 };
@@ -42,6 +41,6 @@ private:
 	bool freePixel(Point p);
 	void BoundryFill(Point begin);
 	void drawside();
-	void BresenhamLine(Point p1, Point p2);
+	void BresenhamLine(Point from, Point to);
 };
 

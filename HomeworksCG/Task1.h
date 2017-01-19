@@ -22,6 +22,5 @@ private:
 	SDL_Rect pos1, pos2;
 	SDL_Color color;
 
-	void BresenhamLine(Point p1, Point p2);
 	void RoundingLine(Point p1, Point p2);
 };

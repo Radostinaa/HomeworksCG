@@ -20,7 +20,7 @@ void clear(SDL_Renderer* r, SDL_Surface* screen, SDL_Window* window)
 	SDL_RenderClear(r);
 }
 
-Task* swithcTask(int task, SDL_Renderer* r, SDL_Surface* s)
+Task* getTask(int task, SDL_Renderer* r, SDL_Surface* s)
 {
 	switch (task)
 	{
@@ -32,107 +32,110 @@ Task* swithcTask(int task, SDL_Renderer* r, SDL_Surface* s)
 	case 4:
 		return new Task4(r);
 	case 3:
-		int w = s->w ;
-		int h = s->h ;
-		return new Task3(r,w,h);
+		int w = s->w;
+		int h = s->h;
+		return new Task3(r, w, h);
 		break;
 	}
 }
 
 int main(int argc, char* args[])
 {
-	SDL_Window* window = NULL;
-	SDL_Surface* screen = NULL;
-	TTF_Font *font = NULL;
-	TTF_Font *fontInfo = NULL;
-	SDL_Renderer *renderer = NULL;
+	SDL_Window* window = nullptr;
+	SDL_Surface* screen = nullptr;
+	TTF_Font *font = nullptr;
+	TTF_Font *fontInfo = nullptr;
+	SDL_Renderer *renderer = nullptr;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-	} else
+		return -1;
+	}
+	else
 	{
 		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-
-		if (window == NULL)
+		if (window)
 		{
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-		} else if (TTF_Init() < 0)
-		{
-			// Handle error...
-		} else
-		{
-			font = TTF_OpenFont("OpenSans-LightItalic.ttf", 28);
-			fontInfo = TTF_OpenFont("OpenSans-LightItalic.ttf", 18);
-			screen = SDL_GetWindowSurface(window);
 
-			int running;
-			Menu menu = Menu(window, font);
-			running = menu.init();
-
-			clear(renderer, screen, window);
-
-			int currentTask;
-			if (running == 5 || running == 0) currentTask = 1;
-			else  currentTask = running;
-
-			Task* t = swithcTask(currentTask, renderer, screen);
-			t->drawInfo(window, screen, fontInfo);
-
-			Point p;
-			SDL_Event event;
-
-			while (running != 0)
+			if (TTF_Init() < 0)
 			{
-				while (SDL_PollEvent(&event))
+				return -1;
+			}
+			else
+			{
+				renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+				font = TTF_OpenFont("OpenSans-LightItalic.ttf", 28);
+				fontInfo = TTF_OpenFont("OpenSans-LightItalic.ttf", 18);
+				screen = SDL_GetWindowSurface(window);
+
+				int running;
+				Menu menu = Menu(window, font);
+				running = menu.init();
+
+				clear(renderer, screen, window);
+
+				int currentTask;
+				if (running == 5 || running == 0) currentTask = 1;
+				else  currentTask = running;
+
+				Task* t = getTask(currentTask, renderer, screen);
+				t->drawInfo(window, screen, fontInfo);
+
+				Point p;
+				SDL_Event event;
+
+				while (running != 0)
 				{
-					switch (event.type)
+					while (SDL_PollEvent(&event))
 					{
-					case SDL_QUIT:
-						running = 0;
-						break;
-					case SDL_KEYDOWN:
-						if (event.key.keysym.sym == SDLK_m)// open menu
+						switch (event.type)
 						{
-							running = menu.init();
-							if (running != currentTask && running != 0 && running != 5) //we have new task
+						case SDL_QUIT:
+							running = 0;
+							break;
+						case SDL_KEYDOWN:
+							if (event.key.keysym.sym == SDLK_m)// open menu
 							{
-								currentTask = running;
-								delete t;
-								t = swithcTask(currentTask, renderer, screen);
+								running = menu.init();
+								if (running != currentTask && running != 0 && running != 5) //we have new task
+								{
+									currentTask = running;
+									delete t;
+									t = getTask(currentTask, renderer, screen);
+								}
+								clear(renderer, screen, window);
+								t->drawInfo(window, screen, font);
 							}
-							clear(renderer, screen, window);
-							t->drawInfo(window, screen, font);
-						} else if (event.key.keysym.sym == SDLK_c) // clear
-						{
-							clear(renderer, screen, window);
-							t->drawInfo(window, screen, fontInfo);
-						}
-						break;
-					case SDL_MOUSEBUTTONDOWN:
-						if (event.button.button == SDL_BUTTON_LEFT) //send x and y to current task
-						{
-							p.x = event.button.x;
-							p.y = event.button.y;
-							p.draw(renderer, { 0,0,0,1 }, false);
+							else if (event.key.keysym.sym == SDLK_c) // clear
+							{
+								clear(renderer, screen, window);
+								t->drawInfo(window, screen, fontInfo);
+							}
+							break;
+						case SDL_MOUSEBUTTONDOWN:
+							if (event.button.button == SDL_BUTTON_LEFT) //send x and y to current task
+							{
+								p.x = event.button.x;
+								p.y = event.button.y;
+								p.draw(renderer, { 0,0,0,1 }, false);
 
-							t->addPoint(p.x, p.y);
+								t->addPoint(p.x, p.y);
 
-							if (t->pointsNeeded == 0) t->Draw();
+								if (t->pointsNeeded == 0) t->Draw();
+							}
+							break;
 						}
-						break;
 					}
 				}
+
+				SDL_DestroyRenderer(renderer);
+				SDL_DestroyWindow(window);
+				TTF_Quit();
+				SDL_Quit();
+				delete t;
+
 			}
-
-			SDL_DestroyRenderer(renderer);
-			SDL_DestroyWindow(window);
-			TTF_Quit();
-			SDL_Quit();
-			delete t;
-
 		}
 	}
 

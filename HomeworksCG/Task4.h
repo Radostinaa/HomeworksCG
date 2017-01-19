@@ -23,5 +23,4 @@ private:
 	void Clip(Point p1, Point p2, Point po1, Point po2);
 	bool CalcT(float r, float q, float* tin, float* tout);
 	void drawRect();
-	void BresenhamLine(Point p1, Point p2);
 };

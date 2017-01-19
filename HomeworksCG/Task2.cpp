@@ -34,34 +34,6 @@ void Task2::drawBresenhamCircle(Point center, int radius)
 			err -= 2 * x + 1;
 		}
 	}
-
-	/*int x, y, d;
-
-	x = 0;
-	y = radius;
-	d = 3 - 2 * radius;
-
-	Point(center.x, center.y + radius).draw(renderer, color, true);
-	Point(center.x, center.y + radius).draw(renderer, color, true);
-	Point(center.x, center.y - radius).draw(renderer, color, true);
-	Point(center.x + radius, center.y).draw(renderer, color, true);
-	Point(center.x - radius, center.y).draw(renderer, color, true);
-
-	while (1)
-	{
-		if (d > -y)
-		{
-			y--;
-			d += 1 - 2 * y;
-		}
-		if (d <= x)
-		{
-			x++;
-			d += 1 + 2 * x;
-		}
-		if (y<x) return;
-		FourSymmetric(center, x, y, radius);
-	}*/
 }
 
 void Task2::SimpleCircle(Point center, int radius)

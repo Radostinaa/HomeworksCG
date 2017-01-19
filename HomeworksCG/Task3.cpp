@@ -15,10 +15,9 @@ void Task3::Draw()
 	}
 	else 
 	{
-		//if(freePixel(points[4]))
 		BoundryFill(points[4]);
 		edges = 0;
-		//deletePoints();
+		deletePoints();
 		resetPoints();
 		pointsNeeded = 2;
 	}

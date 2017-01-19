@@ -24,11 +24,11 @@ public:
 		colorSides = { 255,0,0,1 };
 		colorFill = { 255,165,0,1 };
 		edges = 0;
+		clear = true;
 	}
 	~Task3();
 	void Draw();
 	
-	//void drawInfo(SDL_Window* window, SDL_Surface* screen, TTF_Font* font);
 private:
 
 	SDL_Color colorSides;
@@ -37,6 +37,7 @@ private:
 	Pixel* filledPixels;
 	int pixelsCount;
 	int w, h;
+	bool clear;
 
 	bool freePixel(Point p);
 	void BoundryFill(Point begin);

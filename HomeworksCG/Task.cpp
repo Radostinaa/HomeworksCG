@@ -8,6 +8,10 @@ Task::Task(SDL_Renderer * r, int pNeeded)
 	resetPoints();
 }
 
+Task::Task(const Task & t)
+{
+}
+
 Task::~Task()
 {
 	deletePoints();

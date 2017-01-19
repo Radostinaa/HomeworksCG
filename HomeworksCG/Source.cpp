@@ -4,10 +4,11 @@
 #include "Task2.h"
 #include "Task1.h"
 #include "Task3.h"
+#include "Task4.h"
 #include "Point.h"
 
-const int SCREEN_WIDTH = 1040;
-const int SCREEN_HEIGHT = 880;
+const int SCREEN_WIDTH = 900;
+const int SCREEN_HEIGHT = 900;
 int pixelWidth = 4;
 
 void clear(SDL_Renderer* r, SDL_Surface* screen, SDL_Window* window)
@@ -28,10 +29,13 @@ Task* swithcTask(int task, SDL_Renderer* r, SDL_Surface* s)
 	case 2:
 		return new Task2(r);
 		break;
+	case 4:
+		return new Task4(r);
 	case 3:
 		int w = s->w ;
 		int h = s->h ;
 		return new Task3(r,w,h);
+		break;
 	}
 }
 

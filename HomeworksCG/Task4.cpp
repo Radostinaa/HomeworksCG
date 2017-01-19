@@ -13,11 +13,12 @@ void Task4::Draw()
 		drawRect();
 		pointsNeeded = 2;
 		rectDrawn = true;
-	} else
+	}
+	else
 	{
 		BresenhamLine(points[2], points[3]);
 		color = colorIn;
-		Clip(points[0],points[1],points[2], points[3]);
+		Clip(points[0], points[1], points[2], points[3]);
 
 		deletePoints();
 		resetPoints();
@@ -29,43 +30,37 @@ void Task4::Draw()
 
 void Task4::Clip(Point p1, Point p2, Point po1, Point po2)
 {
-	//Point po1, po2;
-	float dx = p2.x - p1.x;
-	float dy = p2.y - p1.y;
+	float po1x = po1.x, po1y = po1.y, po2x = po2.x, po2y = po2.y;
+	float dx = po2.x - po1.x;
+	float dy = po2.y - po1.y;
 	float tin = 0;
 	float tout = 1;
-	int xMin = std::min(po1.x, po2.x);
-	int xMax = std::max(po1.x, po2.x);
-	int yMin = std::min(po1.y, po2.y);
-	int yMax = std::max(po1.y, po2.y);
-								
-	if (CalcT(dx, xMax - p1.x, &tin, &tout))
-		if (CalcT(-dx, p1.x - xMin, &tin, &tout))
-			if (CalcT(dy, yMax - p1.y, &tin, &tout))
-				if (CalcT(-dy, p1.y - yMin, &tin, &tout))
+	int xMin = std::min(p1.x, p2.x);
+	int xMax = std::max(p1.x, p2.x);
+	int yMin = std::min(p1.y, p2.y);
+	int yMax = std::max(p1.y, p2.y);
+
+
+	if (CalcT(dx, xMax - po1.x, &tin, &tout))
+		if (CalcT(-dx, po1x - xMin, &tin, &tout))
+			if (CalcT(dy, yMax - po1y, &tin, &tout))
+				if (CalcT(-dy, po1y - yMin, &tin, &tout))
 				{
+					if (tout < 1)
+					{
+						po2x = po1x + tout*dx;
+						po2y = po1y + tout*dy;
+					}
 					if (tin > 0)
 					{
-						po1.x = p1.x + tin*dx;
-						po1.y = p1.y + tin*dy;
-					} else
-					{
-						po1.x = p1.x;
-						po1.y = p1.y;
+						po1x = po1x + tin*dx;
+						po1y = po1y + tin*dy;
 					}
-					{
-						if (tout < 1)
-						{
-							po2.x = p2.x + tout*dx;
-							po2.y = p2.y + tout*dy;
-						} else
-						{
-							po2.x = p2.x;
-							po2.y = p2.y;
-						}
-						BresenhamLine(po1, po2);
-					}
+
+
+					BresenhamLine(Point(po1x, po1y), Point(po2x, po2y));
 				}
+
 }
 
 bool Task4::CalcT(float r, float q, float* tin, float* tout)
@@ -76,12 +71,14 @@ bool Task4::CalcT(float r, float q, float* tin, float* tout)
 		t = q / r;
 		if (t < *tin) return 0;
 		*tout = std::min(t, *tout);
-	} else if (r < 0)
+	}
+	else if (r < 0)
 	{
 		t = q / r;
 		if (t > *tout) return 0;
 		*tin = std::max(t, *tin);
-	} else if (q < 0) return 0;
+	}
+	else if (q < 0) return 0;
 	return 1;
 }
 
@@ -124,6 +121,7 @@ void Task4::BresenhamLine(Point p1, Point p2)
 		{
 			d += incUp;
 			y += incY;
-		} else d += incDn;
+		}
+		else d += incDn;
 	}
 }
